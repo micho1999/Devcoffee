@@ -16,7 +16,7 @@ function getUserMedia(constraints) {
   }
 }
 
-function getStream (type) {
+function getStream(type) {
   if (!navigator.mediaDevices && !navigator.getUserMedia && !navigator.webkitGetUserMedia &&
     !navigator.mozGetUserMedia && !navigator.msGetUserMedia) {
     alert('User Media API not supported.');
@@ -25,10 +25,12 @@ function getStream (type) {
 
   var constraints = {};
   constraints[type] = true;
-  
+
   getUserMedia(constraints)
     .then(function (stream) {
-      var mediaControl = document.querySelector(type);
+      // Hier haben Sie Zugriff auf das Stream-Objekt. Sie können es verwenden, wie Sie möchten.
+      // Wenn Sie das Video-Element mit der Klasse "video" und das Audio-Element mit der Klasse "audio" haben:
+      var mediaControl = document.querySelector('.' + type);
       
       if ('srcObject' in mediaControl) {
         mediaControl.srcObject = stream;
@@ -43,7 +45,16 @@ function getStream (type) {
     .catch(function (err) {
       alert('Error: ' + err);
     });
-document.addEventListener("DOMContentLoaded", function () );
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Hier rufen Sie die Funktion getStream auf, wenn das DOM vollständig geladen ist.
+  // Zum Beispiel für das Video-Element:
+  // getStream('video');
+  
+  // Oder für das Audio-Element:
+  // getStream('audio');
+});
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
