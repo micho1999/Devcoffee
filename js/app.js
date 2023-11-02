@@ -54,7 +54,6 @@ function getUserMedia(constraints) {
   }
   
 document.addEventListener("DOMContentLoaded", function() {
-  // Hier rufen Sie Ihre Funktionen auf, wenn das DOM vollständig geladen ist.
 });
 
   
