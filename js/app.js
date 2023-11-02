@@ -1,7 +1,3 @@
-const container = document.querySelector(".container");
-
-
-
 function getUserMedia(options, successCallback, failureCallback) {
   var api = navigator.getUserMedia || navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia || navigator.msGetUserMedia;
@@ -55,26 +51,6 @@ function takePhoto() {
     .then(blob => {
       var theImageTag = document.getElementById("imageTag");
       theImageTag.src = URL.createObjectURL(blob);
-      window.sessionStorage
-      localStorage.setItem("MyPicture", URL.createObjectURL(blob))// Save the image to the Cache API
     })
     .catch(err => alert('Error: ' + err));
-}
-
-function getPic(){
-  var theImageCapturer = new ImageCapture(theStream.getVideoTracks()[0]);
-  window.sessionStorage
-  var theImageTag = document.getElementById("imageTag2");
-  theImageTag.src = localStorage.getItem("MyPicture");
-
-}
-
-
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function() {
-    navigator.serviceWorker
-     .register("./serviceWorker.js",{ scope: "./" })
-      .then(res => console.log("service worker registered"))
-      .catch(err => console.log("service worker not registered", err));
-  });
 }
