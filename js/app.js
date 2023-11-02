@@ -53,8 +53,6 @@ function getUserMedia(constraints) {
       });
   }
   
-  document.addEventListener("DOMContentLoaded", function() {
-  });
-  
+
 
   
