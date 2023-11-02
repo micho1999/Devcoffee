@@ -1,4 +1,9 @@
-
+function getStream (type) {
+  if (!navigator.mediaDevices && !navigator.getUserMedia && !navigator.webkitGetUserMedia &&
+    !navigator.mozGetUserMedia && !navigator.msGetUserMedia) {
+    alert('User Media API not supported.');
+    return;
+  }
 document.addEventListener("DOMContentLoaded", showCoffees);
 
 if ("serviceWorker" in navigator) {
@@ -27,12 +32,7 @@ function getUserMedia(constraints) {
   }
 }
 
-function getStream (type) {
-  if (!navigator.mediaDevices && !navigator.getUserMedia && !navigator.webkitGetUserMedia &&
-    !navigator.mozGetUserMedia && !navigator.msGetUserMedia) {
-    alert('User Media API not supported.');
-    return;
-  }
+
 
   var constraints = {};
   constraints[type] = true;
