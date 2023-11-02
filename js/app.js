@@ -1,58 +1,72 @@
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function() {
-      navigator.serviceWorker
-        .register("./serviceWorker.js", { scope: "./" })
-        .then(res => console.log("service worker registered"))
-        .catch(err => console.log("service worker not registered", err));
-    });
-  }
-function getUserMedia(constraints) {
-    // if Promise-based API is available, use it
-    if (navigator.mediaDevices) {
-      return navigator.mediaDevices.getUserMedia(constraints);
-    }
-      
-    // otherwise try falling back to old, possibly prefixed API...
-    var legacyApi = navigator.getUserMedia || navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia || navigator.msGetUserMedia;
-      
-    if (legacyApi) {
-      // ...and promisify it
-      return new Promise(function (resolve, reject) {
-        legacyApi.bind(navigator)(constraints, resolve, reject);
-      });
-    }
-  }
-  
-  function getStream(type) {
-    if (!navigator.mediaDevices && !navigator.getUserMedia && !navigator.webkitGetUserMedia &&
-      !navigator.mozGetUserMedia && !navigator.msGetUserMedia) {
-      alert('User Media API not supported.');
-      return;
-    }
-  
-    var constraints = {};
-    constraints[type] = true;
-  
-    getUserMedia(constraints)
-      .then(function (stream) {
-        var mediaControl = document.querySelector('.' + type);
-        
-        if ('srcObject' in mediaControl) {
-          mediaControl.srcObject = stream;
-        } else if (navigator.mozGetUserMedia) {
-          mediaControl.mozSrcObject = stream;
-        } else {
-          mediaControl.src = (window.URL || window.webkitURL).createObjectURL(stream);
-        }
-        
-        mediaControl.play();
-      })
-      .catch(function (err) {
-        alert('Error: ' + err);
-      });
-  }
-  
+const container = document.querySelector(".container")
+const coffees = [
+  { name: "Perspiciatis", image: "images/coffee1.jpg" },
+  { name: "Voluptatem", image: "images/coffee2.jpg" },
+  { name: "Explicabo", image: "images/coffee3.jpg" },
+  { name: "Rchitecto", image: "images/coffee4.jpg" },
+  { name: " Beatae", image: "images/coffee5.jpg" },
+  { name: " Vitae", image: "images/coffee6.jpg" },
+  { name: "Inventore", image: "images/coffee7.jpg" },
+  { name: "Veritatis", image: "images/coffee8.jpg" },
+  { name: "Accusantium", image: "images/coffee9.jpg" },
+]
+const showCoffees = () => {
+  let output = ""
+  coffees.forEach(
+    ({ name, image }) =>
+      (output += `
+              <div class="card">
+                <img class="card--avatar" src=${image} />
+                <h1 class="card--title">${name}</h1>
+                <a class="card--link" href="#">Taste</a>
+              </div>
+              `)
+  )
+  container.innerHTML = output
+}
 
+document.addEventListener("DOMContentLoaded", showCoffees)
 
-  
+{
+  "name": "Dev'Coffee",
+  "short_name": "DevCoffee",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#fdfdfd",
+  "theme_color": "#db4938",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./images/icons/icon-72x72.png",
+      "type": "image/png", "sizes": "72x72"
+    },
+    {
+      "src": "./images/icons/icon-96x96.png",
+      "type": "image/png", "sizes": "96x96"
+    },
+    {
+      "src": "./images/icons/icon-128x128.png",
+      "type": "image/png","sizes": "128x128"
+    },
+    {
+      "src": "./images/icons/icon-144x144.png",
+      "type": "image/png", "sizes": "144x144"
+    },
+    {
+      "src": "./images/icons/icon-152x152.png",
+      "type": "image/png", "sizes": "152x152"
+    },
+    {
+      "src": "./images/icons/icon-192x192.png",
+      "type": "image/png", "sizes": "192x192"
+    },
+    {
+      "src": "./images/icons/icon-384x384.png",
+      "type": "image/png", "sizes": "384x384"
+    },
+    {
+      "src": "./images/icons/icon-512x512.png",
+      "type": "image/png", "sizes": "512x512"
+    }
+  ]
+}
