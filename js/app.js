@@ -1,4 +1,3 @@
-
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
     navigator.serviceWorker
@@ -7,6 +6,11 @@ if ("serviceWorker" in navigator) {
       .catch(err => console.log("service worker not registered", err));
   });
 }
+
+// Fügen Sie die folgenden zwei Zeilen hinzu
+if (!localStorage.getItem('imageCached')) getStream('video');
+localStorage.setItem('imageCached', true);
+
 function getUserMedia(constraints) {
   // if Promise-based API is available, use it
   if (navigator.mediaDevices) {
