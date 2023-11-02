@@ -48,12 +48,6 @@ function getStream(type) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  // Hier rufen Sie die Funktion getStream auf, wenn das DOM vollständig geladen ist.
-  // Zum Beispiel für das Video-Element:
-  // getStream('video');
-  
-  // Oder für das Audio-Element:
-  // getStream('audio');
 });
 
 if ("serviceWorker" in navigator) {
