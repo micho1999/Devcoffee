@@ -1,19 +1,3 @@
-function getStream (type) {
-  if (!navigator.mediaDevices && !navigator.getUserMedia && !navigator.webkitGetUserMedia &&
-    !navigator.mozGetUserMedia && !navigator.msGetUserMedia) {
-    alert('User Media API not supported.');
-    return;
-  }
-document.addEventListener("DOMContentLoaded", showCoffees);
-
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function() {
-    navigator.serviceWorker
-      .register("./serviceWorker.js", { scope: "./" })
-      .then(res => console.log("service worker registered"))
-      .catch(err => console.log("service worker not registered", err));
-  });
-}
 function getUserMedia(constraints) {
   // if Promise-based API is available, use it
   if (navigator.mediaDevices) {
@@ -32,7 +16,12 @@ function getUserMedia(constraints) {
   }
 }
 
-
+function getStream (type) {
+  if (!navigator.mediaDevices && !navigator.getUserMedia && !navigator.webkitGetUserMedia &&
+    !navigator.mozGetUserMedia && !navigator.msGetUserMedia) {
+    alert('User Media API not supported.');
+    return;
+  }
 
   var constraints = {};
   constraints[type] = true;
@@ -54,7 +43,6 @@ function getUserMedia(constraints) {
     .catch(function (err) {
       alert('Error: ' + err);
     });
-
 const container = document.querySelector(".container");
 const coffees = [
   {
