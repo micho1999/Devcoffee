@@ -28,8 +28,6 @@ function getStream(type) {
 
   getUserMedia(constraints)
     .then(function (stream) {
-      // Hier haben Sie Zugriff auf das Stream-Objekt. Sie können es verwenden, wie Sie möchten.
-      // Wenn Sie das Video-Element mit der Klasse "video" und das Audio-Element mit der Klasse "audio" haben:
       var mediaControl = document.querySelector('.' + type);
       
       if ('srcObject' in mediaControl) {
