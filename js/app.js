@@ -2,7 +2,7 @@ const container = document.querySelector(".container");
 
 
 
-function getUserMedia(options, successCallback, failureCallback) {
+/* function getUserMedia(options, successCallback, failureCallback) {
   var api = navigator.getUserMedia || navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia || navigator.msGetUserMedia;
   if (api) {
@@ -67,7 +67,7 @@ function getPic(){
   theImageTag.src = localStorage.getItem("MyPicture");
 
 }
-
+*/
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
