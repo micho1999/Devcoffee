@@ -62,7 +62,6 @@ function takePhoto() {
 }
 
 function getPic(){
-  var theImageCapturer = new ImageCapture(theStream.getVideoTracks()[0]);
   window.sessionStorage
   var theImageTag = document.getElementById("imageTag2");
   theImageTag.src = localStorage.getItem("MyPicture");
