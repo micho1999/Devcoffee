@@ -23,33 +23,3 @@ nav {
   align-items: center;
 }
 
-ul {
-  list-style: none;
-  display: flex;
-}
-
-li {
-  margin-right: 1rem;
-}
-
-h1 {
-  color: #e74c3c;
-  margin-bottom: 0.5rem;
-}
-.btn-file {
-    position: relative;
-    overflow: hidden;
-    margin: 10px;
-}
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    opacity: 0;
-    outline: none;
-    background: #fff;
-    cursor: inherit;
-    display: block;
-}
