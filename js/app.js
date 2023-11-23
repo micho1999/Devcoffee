@@ -23,7 +23,12 @@ function closeNav() {
 }
 if ('getBattery' in navigator || ('battery' in navigator && 'Promise' in window)) {
   var target = document.getElementById('target');
+  var batteryBar = document.createElement('div');
+  batteryBar.id = 'batteryBar';
+  batteryStatus.appendChild(batteryBar);
 
+  var batteryPromise; 
+  
   function handleChange(change) {
     var timeBadge = new Date().toTimeString().split(' ')[0];
     var newState = document.createElement('p');
@@ -52,15 +57,14 @@ if ('getBattery' in navigator || ('battery' in navigator && 'Promise' in window)
     batteryPromise = Promise.resolve(navigator.battery);
   }
   
-  batteryPromise.then(function (battery) {
-    document.getElementById('charging').innerHTML = battery.charging ? 'charging' : 'discharging';
-    document.getElementById('chargingTime').innerHTML = battery.chargingTime + ' s';
-    document.getElementById('dischargingTime').innerHTML = battery.dischargingTime + ' s';
-    document.getElementById('level').innerHTML = battery.level;
+ batteryPromise.then(function (battery) {
+    function updateBatteryStatus() {
+      var percentage = battery.level * 100;
+      batteryBar.style.width = percentage + '%';
+    }
     
-    battery.addEventListener('chargingchange', onChargingChange);
-    battery.addEventListener('chargingtimechange', onChargingTimeChange);
-    battery.addEventListener('dischargingtimechange', onDischargingTimeChange);
-    battery.addEventListener('levelchange', onLevelChange);
+    updateBatteryStatus(); // Initialer Status
+    
+    battery.addEventListener('levelchange', updateBatteryStatus);
   });
 }
