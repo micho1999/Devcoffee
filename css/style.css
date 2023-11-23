@@ -94,3 +94,14 @@ nav {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+/* Stil für den Batteriebalken */
+#batteryStatus {
+  width: 100%;
+  height: 20px;
+  background-color: #ddd;
+}
+
+#batteryBar {
+  height: 100%;
+  background-color: green;
+}
