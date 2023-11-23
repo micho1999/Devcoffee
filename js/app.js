@@ -64,3 +64,6 @@ if ('getBattery' in navigator || ('battery' in navigator && 'Promise' in window)
     battery.addEventListener('levelchange', onLevelChange);
   });
 }
+var battery = navigator.battery;
+var level = battery.level * 100;
+var levelBar = $('.level');
