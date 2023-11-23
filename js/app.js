@@ -67,3 +67,15 @@ if ('getBattery' in navigator || ('battery' in navigator && 'Promise' in window)
 var battery = navigator.battery;
 var level = battery.level * 100;
 var levelBar = $('.level');
+if (battery.charging) {
+    levelBar.addClass('charging');
+} else if (level &gt; 65) {
+    levelBar.addClass('high');
+} else if (level &gt;= 35) {
+    levelBar.addClass('med');
+} else {
+    levelBar.addClass('low');
+}
+if (!battery.charging) {
+  levelBar.css('width', level + '%');
+}
