@@ -94,3 +94,36 @@ nav {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+.battery .level {
+    height: 100%;
+    width: 2%;
+}
+ 
+.battery .level.high {
+    background-color: #27AE60; 
+}
+ 
+.battery .level.med {
+    background-color: #E67E22; 
+}
+ 
+.battery .level.low {
+    background-color: #E74C3C; 
+}
+ 
+.battery .level.charging {
+    background-color: #27AE60; 
+    width: 100%;
+    text-align: center;
+}
+ 
+.battery .level.charging:before {
+    content: '\e800';
+    display: block;
+    height: 100%;
+    width: 100%;
+    color: #fff;
+    line-height: 40px;
+    font-family: 'Battery';
+    font-size: 25px;
+}
