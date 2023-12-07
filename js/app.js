@@ -10,22 +10,62 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-// displayData.js
+// Funktion zum Speichern der Daten im LocalStorage
+function saveDataToLocalStorage(description, date, category, amount) {
+  const expenseData = {
+    description: description,
+    date: date,
+    category: category,
+    amount: amount
+  };
 
+  let expenses = localStorage.getItem('expenses');
+  if (expenses === null) {
+    expenses = [];
+  } else {
+    expenses = JSON.parse(expenses);
+  }
+
+  expenses.push(expenseData);
+  localStorage.setItem('expenses', JSON.stringify(expenses));
+}
+
+// Funktion zum Laden der gespeicherten Daten in die Tabelle
+function loadSavedData() {
+  const expenses = localStorage.getItem('expenses');
+  if (expenses !== null) {
+    const tableBody = document.getElementById('expenseTableBody');
+
+    JSON.parse(expenses).forEach(expense => {
+      const newRow = tableBody.insertRow(-1);
+
+      const cell1 = newRow.insertCell(0);
+      const cell2 = newRow.insertCell(1);
+      const cell3 = newRow.insertCell(2);
+      const cell4 = newRow.insertCell(3);
+
+      cell1.textContent = expense.description;
+      cell2.textContent = expense.date;
+      cell3.textContent = expense.category;
+      cell4.textContent = expense.amount;
+    });
+  }
+}
+
+// Formular-Ereignis zum Speichern und Anzeigen von Daten
 document.getElementById('expenseForm').addEventListener('submit', function(event) {
   event.preventDefault();
 
-  // Daten aus dem Formular erfassen
   const description = document.getElementById('description').value;
   const date = document.getElementById('date').value;
   const category = document.getElementById('category').value;
   const amount = document.getElementById('amount').value;
 
-  // Daten in die Tabelle einfügen
-  const tableBody = document.getElementById('expenseTableBody');
-  const newRow = tableBody.insertRow(-1); // Neue Zeile am Ende der Tabelle einfügen
+  saveDataToLocalStorage(description, date, category, amount);
 
-  // Zellen für jede Spalte erstellen und Daten einfügen
+  const tableBody = document.getElementById('expenseTableBody');
+  const newRow = tableBody.insertRow(-1);
+
   const cell1 = newRow.insertCell(0);
   const cell2 = newRow.insertCell(1);
   const cell3 = newRow.insertCell(2);
@@ -36,7 +76,8 @@ document.getElementById('expenseForm').addEventListener('submit', function(event
   cell3.textContent = category;
   cell4.textContent = amount;
 
-  // Formular zurücksetzen
   document.getElementById('expenseForm').reset();
 });
 
+// Laden der gespeicherten Daten beim Seitenladen
+window.onload = loadSavedData;
