@@ -18,7 +18,7 @@ function saveDataToLocalStorage(description, date, category, number) {
   localStorage.setItem('expenses', JSON.stringify(expenses));
 
   // Aktualisiere den Betrag in der Tabelle
-  updateAmountInTable(expenseData.number);
+  updateAmountInTable(expenses);
 }
 
 // Funktion zum Laden der gespeicherten Daten in die Tabelle
@@ -43,21 +43,22 @@ function loadSavedData() {
 
       // Wenn es mehr als eine Zeile gibt, aktualisiere den Betrag
       if (index > 0) {
-        updateAmountInTable(expense.number);
+        const previousAmount = expensesArray[index - 1].number;
+        updateAmountInTable(previousAmount);
       }
     });
   }
 }
 
 // Funktion zum Aktualisieren des Betrags in der Tabelle
-function updateAmountInTable(newAmount) {
+function updateAmountInTable(previousAmount) {
   const table = document.getElementById('expenseTable');
   const rows = table.getElementsByTagName('tr');
   const lastRow = rows[rows.length - 1];
   const cells = lastRow.getElementsByTagName('td');
 
   const currentAmount = parseFloat(cells[3].textContent);
-  const updatedAmount = currentAmount - newAmount;
+  const updatedAmount = currentAmount - previousAmount;
   cells[3].textContent = updatedAmount.toFixed(2);
 }
 
