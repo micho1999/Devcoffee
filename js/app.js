@@ -4,7 +4,7 @@ function saveDataToLocalStorage(description, date, category, amount) {
     description: description,
     date: date,
     category: category,
-    amount: parseFloat(amount) // Umwandlung des Betrags in eine Zahl
+    amount: parseFloat(number) // Umwandlung des Betrags in eine Zahl
   };
 
   let expenses = localStorage.getItem('expenses');
@@ -39,7 +39,7 @@ function loadSavedData() {
       cell1.textContent = expense.description;
       cell2.textContent = expense.date;
       cell3.textContent = expense.category;
-      cell4.textContent = expense.amount.toFixed(2);
+      cell4.textContent = expense.number.toFixed(2);
 
       // Wenn es mehr als eine Zeile gibt, aktualisiere den Betrag
       if (index > 0) {
@@ -71,9 +71,9 @@ document.getElementById('expenseForm').addEventListener('submit', function(event
   const description = document.getElementById('description').value;
   const date = document.getElementById('date').value;
   const category = document.getElementById('category').value;
-  const amount = document.getElementById('amount').value;
+  const amount = document.getElementById('number').value;
 
-  saveDataToLocalStorage(description, date, category, amount);
+  saveDataToLocalStorage(description, date, category, number);
 
   const tableBody = document.getElementById('expenseTableBody');
   const newRow = tableBody.insertRow(-1);
@@ -86,7 +86,7 @@ document.getElementById('expenseForm').addEventListener('submit', function(event
   cell1.textContent = description;
   cell2.textContent = date;
   cell3.textContent = category;
-  cell4.textContent = amount;
+  cell4.textContent = number;
 
   document.getElementById('expenseForm').reset();
 });
