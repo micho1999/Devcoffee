@@ -18,7 +18,10 @@ function saveDataToLocalStorage(description, date, category, number) {
   localStorage.setItem('expenses', JSON.stringify(expenses));
 
   // Aktualisiere den Betrag in der Tabelle
-  updateAmountInTable(expenses);
+  if (expenses.length > 1) {
+    const lastAmount = expenses[expenses.length - 2].number;
+    updateAmountInTable(lastAmount, expenseData.number);
+  }
 }
 
 // Funktion zum Laden der gespeicherten Daten in die Tabelle
@@ -28,7 +31,7 @@ function loadSavedData() {
     const tableBody = document.getElementById('expenseTableBody');
     const expensesArray = JSON.parse(expenses);
 
-    expensesArray.forEach((expense, index) => {
+    expensesArray.forEach(expense => {
       const newRow = tableBody.insertRow(-1);
 
       const cell1 = newRow.insertCell(0);
@@ -40,26 +43,25 @@ function loadSavedData() {
       cell2.textContent = expense.date;
       cell3.textContent = expense.category;
       cell4.textContent = expense.number.toFixed(2);
-
-      // Wenn es mehr als eine Zeile gibt, aktualisiere den Betrag
-      if (index > 1) {
-        const previousAmount = expensesArray[index - 1].number;
-        updateAmountInTable(previousAmount);
-      }
     });
   }
 }
 
 // Funktion zum Aktualisieren des Betrags in der Tabelle
-function updateAmountInTable(previousAmount) {
+function updateAmountInTable(lastAmount, newAmount) {
   const table = document.getElementById('expenseTable');
   const rows = table.getElementsByTagName('tr');
   const lastRow = rows[rows.length - 1];
   const cells = lastRow.getElementsByTagName('td');
 
   const currentAmount = parseFloat(cells[3].textContent);
-  const updatedAmount = currentAmount - previousAmount;
+  const updatedAmount = currentAmount - lastAmount;
   cells[3].textContent = updatedAmount.toFixed(2);
+
+  // Aktualisiere den Betrag der letzten Zeile mit dem neuen Betrag
+  const newCells = rows[rows.length - 1].getElementsByTagName('td');
+  const updatedNewAmount = parseFloat(newCells[3].textContent) - newAmount;
+  newCells[3].textContent = updatedNewAmount.toFixed(2);
 }
 
 // Restlicher Code bleibt unverändert
