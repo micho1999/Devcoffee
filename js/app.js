@@ -1,10 +1,10 @@
 // Funktion zum Speichern der Daten im LocalStorage
-function saveDataToLocalStorage(description, date, category, amount) {
+function saveDataToLocalStorage(description, date, category, number) {
   const expenseData = {
     description: description,
     date: date,
     category: category,
-    amount: parseFloat(number) // Umwandlung des Betrags in eine Zahl
+    number: parseFloat(number) // Konvertierung des Betrags in eine Zahl
   };
 
   let expenses = localStorage.getItem('expenses');
@@ -18,7 +18,7 @@ function saveDataToLocalStorage(description, date, category, amount) {
   localStorage.setItem('expenses', JSON.stringify(expenses));
 
   // Aktualisiere den Betrag in der Tabelle
-  updateAmountInTable();
+  updateAmountInTable(expenseData.number);
 }
 
 // Funktion zum Laden der gespeicherten Daten in die Tabelle
@@ -43,7 +43,7 @@ function loadSavedData() {
 
       // Wenn es mehr als eine Zeile gibt, aktualisiere den Betrag
       if (index > 0) {
-        updateAmountInTable(expense.amount);
+        updateAmountInTable(expense.number);
       }
     });
   }
@@ -71,7 +71,7 @@ document.getElementById('expenseForm').addEventListener('submit', function(event
   const description = document.getElementById('description').value;
   const date = document.getElementById('date').value;
   const category = document.getElementById('category').value;
-  const amount = document.getElementById('number').value;
+  const number = document.getElementById('amount').value;
 
   saveDataToLocalStorage(description, date, category, number);
 
