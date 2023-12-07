@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Dev'Coffee PWA</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="manifest" href="manifest.json">
-  <!-- ios support -->
+  <!-- iOS support -->
   <meta name="theme-color" content="#db4938">
-  <title>Dev'Coffee PWA</title>
 </head>
 <body>
   <div>
     <main>
       <nav>
         <h1>Micho's Coffee</h1>
-        <form>
+        <form id="expenseForm">
           <label for="description">Description:</label>
           <input type="text" id="description" name="description"><br><br>
 
@@ -30,7 +30,10 @@
 
           <input type="submit" value="Submit">
         </form>
-        <table id="expenseTable">
+      </nav>
+    </main>
+    
+    <table id="expenseTable">
       <thead>
         <tr>
           <th>Description</th>
@@ -47,9 +50,5 @@
 
   <script src="js/app.js"></script>
   <script src="js/displayData.js"></script>
-      </nav>
-    </main>
-  </div>
-  <script src="js/app.js"></script>
 </body>
 </html>
