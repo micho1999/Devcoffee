@@ -10,61 +10,33 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-  document.getElementById("main").style.marginLeft = "250px";
-}
+// displayData.js
 
-/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-  document.getElementById("main").style.marginLeft = "0";
-}
-if ('getBattery' in navigator || ('battery' in navigator && 'Promise' in window)) {
-  var target = document.getElementById('target');
-  var batteryBar = document.createElement('div');
-  batteryBar.id = 'batteryBar';
-  batteryStatus.appendChild(batteryBar);
+document.getElementById('expenseForm').addEventListener('submit', function(event) {
+  event.preventDefault();
 
-  var batteryPromise; 
-  
-  function handleChange(change) {
-    var timeBadge = new Date().toTimeString().split(' ')[0];
-    var newState = document.createElement('p');
-    newState.innerHTML = '' + timeBadge + ' ' + change + '.';
-    target.appendChild(newState);
-  }
-  
-  function onChargingChange() {
-    handleChange('Battery charging changed to ' + (this.charging ? 'charging' : 'discharging') + '')
-  }
-  function onChargingTimeChange() {
-    handleChange('Battery charging time changed to ' + this.chargingTime + ' s');
-  }
-  function onDischargingTimeChange() {
-    handleChange('Battery discharging time changed to ' + this.dischargingTime + ' s');
-  }
-  function onLevelChange() {
-    handleChange('Battery level changed to ' + this.level + '');
-  }
+  // Daten aus dem Formular erfassen
+  const description = document.getElementById('description').value;
+  const date = document.getElementById('date').value;
+  const category = document.getElementById('category').value;
+  const amount = document.getElementById('amount').value;
 
-  var batteryPromise;
-  
-  if ('getBattery' in navigator) {
-    batteryPromise = navigator.getBattery();
-  } else {
-    batteryPromise = Promise.resolve(navigator.battery);
-  }
-  
- batteryPromise.then(function (battery) {
-    function updateBatteryStatus() {
-      var percentage = battery.level * 100;
-      batteryBar.style.width = percentage + '%';
-    }
-    
-    updateBatteryStatus(); // Initialer Status
-    
-    battery.addEventListener('levelchange', updateBatteryStatus);
-  });
-}
+  // Daten in die Tabelle einfügen
+  const tableBody = document.getElementById('expenseTableBody');
+  const newRow = tableBody.insertRow(-1); // Neue Zeile am Ende der Tabelle einfügen
+
+  // Zellen für jede Spalte erstellen und Daten einfügen
+  const cell1 = newRow.insertCell(0);
+  const cell2 = newRow.insertCell(1);
+  const cell3 = newRow.insertCell(2);
+  const cell4 = newRow.insertCell(3);
+
+  cell1.textContent = description;
+  cell2.textContent = date;
+  cell3.textContent = category;
+  cell4.textContent = amount;
+
+  // Formular zurücksetzen
+  document.getElementById('expenseForm').reset();
+});
+
