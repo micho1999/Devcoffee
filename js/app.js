@@ -50,6 +50,28 @@ document.getElementById('expenseForm').addEventListener('submit', function(event
 // Laden der gespeicherten Daten beim Seitenladen
 window.onload = loadSavedData;
 
+function loadSavedData() {
+  const expenses = JSON.parse(localStorage.getItem('expenses'));
+  if (expenses !== null) {
+    expenses.forEach(expense => {
+      const tableBody = document.getElementById('expenseTableBody');
+      const newRow = tableBody.insertRow(-1);
+
+      const cell1 = newRow.insertCell(0);
+      const cell2 = newRow.insertCell(1);
+      const cell3 = newRow.insertCell(2);
+      const cell4 = newRow.insertCell(3);
+      const cell5 = newRow.insertCell(4);
+
+      cell1.textContent = expense.description;
+      cell2.textContent = expense.date;
+      cell3.textContent = expense.category;
+      cell4.textContent = expense.number;
+      cell5.textContent = calculateBalance(expenses.indexOf(expense));
+    });
+  }
+}
+
 // Funktion zum Berechnen des Balance-Betrags
 function calculateBalance(index) {
   const expenses = JSON.parse(localStorage.getItem('expenses'));
