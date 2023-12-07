@@ -1,15 +1,3 @@
-const container = document.querySelector(".container");
-
-
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function() {
-    navigator.serviceWorker
-     .register("./serviceWorker.js",{ scope: "./" })
-      .then(res => console.log("service worker registered"))
-      .catch(err => console.log("service worker not registered", err));
-  });
-}
-
 // Funktion zum Speichern der Daten im LocalStorage
 function saveDataToLocalStorage(description, date, category, amount) {
   const expenseData = {
@@ -28,6 +16,9 @@ function saveDataToLocalStorage(description, date, category, amount) {
 
   expenses.push(expenseData);
   localStorage.setItem('expenses', JSON.stringify(expenses));
+
+  // Aktualisiere den Betrag in der Tabelle
+  updateAmountInTable(amount);
 }
 
 // Funktion zum Laden der gespeicherten Daten in die Tabelle
@@ -48,9 +39,28 @@ function loadSavedData() {
       cell2.textContent = expense.date;
       cell3.textContent = expense.category;
       cell4.textContent = expense.amount;
+
+      // Aktualisiere den Betrag in der Tabelle
+      updateAmountInTable(expense.amount);
     });
   }
 }
+
+// Funktion zum Aktualisieren des Betrags in der Tabelle
+function updateAmountInTable(newAmount) {
+  const table = document.getElementById('expenseTable');
+  const rows = table.getElementsByTagName('tr');
+
+  for (let i = 1; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName('td');
+    const currentAmount = parseFloat(cells[3].textContent);
+    const updatedAmount = currentAmount - parseFloat(newAmount);
+    cells[3].textContent = updatedAmount.toFixed(2);
+  }
+}
+
+// Restlicher Code bleibt unverändert
+// ...
 
 // Formular-Ereignis zum Speichern und Anzeigen von Daten
 document.getElementById('expenseForm').addEventListener('submit', function(event) {
