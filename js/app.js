@@ -74,7 +74,7 @@ document.getElementById('expenseForm').addEventListener('submit', function(event
   const description = document.getElementById('description').value;
   const date = document.getElementById('date').value;
   const category = document.getElementById('category').value;
-  const number = document.getElementById('amount').value;
+  const number = document.getElementById('number').value;
 
   saveDataToLocalStorage(description, date, category, number);
 
