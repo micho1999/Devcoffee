@@ -34,9 +34,6 @@ function saveDataToLocalStorage(description, date, category, number) {
   cell5.textContent = calculateBalance(expenses.length - 1); // Berechne die Balance für die neue Zeile
 }
 
-// Rest des Codes bleibt unverändert
-// ...
-
 // Formular-Ereignis zum Speichern und Anzeigen von Daten
 document.getElementById('expenseForm').addEventListener('submit', function(event) {
   event.preventDefault();
