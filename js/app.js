@@ -42,7 +42,7 @@ function loadSavedData() {
       cell4.textContent = expense.number.toFixed(2);
 
       // Wenn es mehr als eine Zeile gibt, aktualisiere den Betrag
-      if (index > 0) {
+      if (index > 1) {
         const previousAmount = expensesArray[index - 1].number;
         updateAmountInTable(previousAmount);
       }
