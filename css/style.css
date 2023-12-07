@@ -93,3 +93,14 @@ thead {
   background-color: #db4938;
   color: #fff;
 }
+
+/* Füge diese Regel am Ende deines CSS-Codes hinzu */
+
+/* Spalte Balance */
+th:nth-child(5),
+td:nth-child(5) {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
