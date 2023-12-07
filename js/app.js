@@ -4,7 +4,7 @@ function saveDataToLocalStorage(description, date, category, amount) {
     description: description,
     date: date,
     category: category,
-    amount: number
+    amount: parseFloat(amount) // Umwandlung des Betrags in eine Zahl
   };
 
   let expenses = localStorage.getItem('expenses');
@@ -18,7 +18,7 @@ function saveDataToLocalStorage(description, date, category, amount) {
   localStorage.setItem('expenses', JSON.stringify(expenses));
 
   // Aktualisiere den Betrag in der Tabelle
-  updateAmountInTable(amount);
+  updateAmountInTable();
 }
 
 // Funktion zum Laden der gespeicherten Daten in die Tabelle
@@ -26,8 +26,9 @@ function loadSavedData() {
   const expenses = localStorage.getItem('expenses');
   if (expenses !== null) {
     const tableBody = document.getElementById('expenseTableBody');
+    const expensesArray = JSON.parse(expenses);
 
-    JSON.parse(expenses).forEach(expense => {
+    expensesArray.forEach((expense, index) => {
       const newRow = tableBody.insertRow(-1);
 
       const cell1 = newRow.insertCell(0);
@@ -38,10 +39,12 @@ function loadSavedData() {
       cell1.textContent = expense.description;
       cell2.textContent = expense.date;
       cell3.textContent = expense.category;
-      cell4.textContent = expense.number;
+      cell4.textContent = expense.amount.toFixed(2);
 
-      // Aktualisiere den Betrag in der Tabelle
-      updateAmountInTable(expense.number);
+      // Wenn es mehr als eine Zeile gibt, aktualisiere den Betrag
+      if (index > 0) {
+        updateAmountInTable(expense.amount);
+      }
     });
   }
 }
@@ -50,13 +53,12 @@ function loadSavedData() {
 function updateAmountInTable(newAmount) {
   const table = document.getElementById('expenseTable');
   const rows = table.getElementsByTagName('tr');
+  const lastRow = rows[rows.length - 1];
+  const cells = lastRow.getElementsByTagName('td');
 
-  for (let i = 1; i < rows.length; i++) {
-    const cells = rows[i].getElementsByTagName('td');
-    const currentAmount = parseFloat(cells[3].textContent);
-    const updatedAmount = currentAmount - parseFloat(newAmount);
-    cells[3].textContent = updatedAmount.toFixed(2);
-  }
+  const currentAmount = parseFloat(cells[3].textContent);
+  const updatedAmount = currentAmount - newAmount;
+  cells[3].textContent = updatedAmount.toFixed(2);
 }
 
 // Restlicher Code bleibt unverändert
@@ -69,9 +71,9 @@ document.getElementById('expenseForm').addEventListener('submit', function(event
   const description = document.getElementById('description').value;
   const date = document.getElementById('date').value;
   const category = document.getElementById('category').value;
-  const amount = document.getElementById('number').value;
+  const amount = document.getElementById('amount').value;
 
-  saveDataToLocalStorage(description, date, category, number);
+  saveDataToLocalStorage(description, date, category, amount);
 
   const tableBody = document.getElementById('expenseTableBody');
   const newRow = tableBody.insertRow(-1);
@@ -84,7 +86,7 @@ document.getElementById('expenseForm').addEventListener('submit', function(event
   cell1.textContent = description;
   cell2.textContent = date;
   cell3.textContent = category;
-  cell4.textContent = number;
+  cell4.textContent = amount;
 
   document.getElementById('expenseForm').reset();
 });
