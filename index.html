@@ -15,6 +15,23 @@
     <main>
       <nav>
         <h1>Micho's Coffee</h1>
+         <div class="board" th:action="@{/user/{id}/token/project/{id}}" method="GET">
+        <div class="column" id="backlog">
+            <h3>Backlog</h3>
+        </div>
+        <div class="column" id="inprogress">
+            <h3>In Progress</h3>
+
+        </div>
+        <div class="column" id="inreview">
+            <h3>In Review</h3>
+
+        </div>
+        <div class="column" id="done">
+            <h3>Done</h3>
+        </div>
+    </div>
+
        <div class="test-element">Drag me with one finger</div>
 <div class="test-element">Drag me with another finger</div>
 <div class="test-element">Drag me too</div>
