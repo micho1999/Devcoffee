@@ -1,85 +1,43 @@
-// Funktion zum Speichern der Daten im LocalStorage
-function saveDataToLocalStorage(description, date, category, number) {
-  const expenseData = {
-    description: description,
-    date: date,
-    category: category,
-    number: parseFloat(number) // Konvertierung des Betrags in eine Zahl
-  };
+function startDrag(e) {
+  this.ontouchmove = this.onmspointermove = moveDrag;
 
-  let expenses = localStorage.getItem('expenses');
-  if (expenses === null) {
-    expenses = [];
-  } else {
-    expenses = JSON.parse(expenses);
+  this.ontouchend = this.onmspointerup = function () {
+    this.ontouchmove = this.onmspointermove = null;
+    this.ontouchend = this.onmspointerup = null;
   }
 
-  expenses.push(expenseData);
-  localStorage.setItem('expenses', JSON.stringify(expenses));
+  var pos = [this.offsetLeft, this.offsetTop];
+  var that = this;
+  var origin = getCoors(e);
 
-  // Direktes Einfügen der neuen Zeile in die Tabelle mit Balance
-  const tableBody = document.getElementById('expenseTableBody');
-  const newRow = tableBody.insertRow(-1);
+  function moveDrag(e) {
+    var currentPos = getCoors(e);
+    var deltaX = currentPos[0] - origin[0];
+    var deltaY = currentPos[1] - origin[1];
+    this.style.left = (pos[0] + deltaX) + 'px';
+    this.style.top = (pos[1] + deltaY) + 'px';
+    return false; // cancels scrolling
+  }
 
-  const cell1 = newRow.insertCell(0);
-  const cell2 = newRow.insertCell(1);
-  const cell3 = newRow.insertCell(2);
-  const cell4 = newRow.insertCell(3);
-  const cell5 = newRow.insertCell(4);
-
-  cell1.textContent = description;
-  cell2.textContent = date;
-  cell3.textContent = category;
-  cell4.textContent = number;
-  cell5.textContent = calculateBalance(expenses.length - 1); // Berechne die Balance für die neue Zeile
+  function getCoors(e) {
+    var coors = [];
+    if (e.targetTouches && e.targetTouches.length) {
+      var thisTouch = e.targetTouches[0];
+      coors[0] = thisTouch.clientX;
+      coors[1] = thisTouch.clientY;
+    } else {
+      coors[0] = e.clientX;
+      coors[1] = e.clientY;
+    }
+    return coors;
+  }
 }
 
-// Formular-Ereignis zum Speichern und Anzeigen von Daten
-document.getElementById('expenseForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  const description = document.getElementById('description').value;
-  const date = document.getElementById('date').value;
-  const category = document.getElementById('category').value;
-  const number = document.getElementById('number').value;
-
-  saveDataToLocalStorage(description, date, category, number);
-  document.getElementById('expenseForm').reset();
+var elements = document.querySelectorAll('.test-element');
+[].forEach.call(elements, function (element) {
+  element.ontouchstart = element.onmspointerdown = startDrag;
 });
 
-// Laden der gespeicherten Daten beim Seitenladen
-window.onload = loadSavedData;
-
-function loadSavedData() {
-  const expenses = JSON.parse(localStorage.getItem('expenses'));
-  if (expenses !== null) {
-    expenses.forEach(expense => {
-      const tableBody = document.getElementById('expenseTableBody');
-      const newRow = tableBody.insertRow(-1);
-
-      const cell1 = newRow.insertCell(0);
-      const cell2 = newRow.insertCell(1);
-      const cell3 = newRow.insertCell(2);
-      const cell4 = newRow.insertCell(3);
-      const cell5 = newRow.insertCell(4);
-
-      cell1.textContent = expense.description;
-      cell2.textContent = expense.date;
-      cell3.textContent = expense.category;
-      cell4.textContent = expense.number;
-      cell5.textContent = calculateBalance(expenses.indexOf(expense));
-    });
-  }
-}
-
-// Funktion zum Berechnen des Balance-Betrags
-function calculateBalance(index) {
-  const expenses = JSON.parse(localStorage.getItem('expenses'));
-  let balance = 10000; // Standardbetrag
-
-  for (let i = 0; i <= index; i++) {
-    balance -= expenses[i].number;
-  }
-
-  return balance.toFixed(2);
+document.ongesturechange = function () {
+  return false;
 }
