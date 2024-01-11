@@ -1,106 +1,22 @@
-/* Baseline Reset */
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ul,
-ol,
-li,
-table,
-th,
-td,
-form,
-input,
-label {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-family: 'Arial', sans-serif;
+.test-element {
+  height: 100px;
+  background-color: black;
+  width: 100px;
+  z-index: 5;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  color: white;
+  text-align: center;
+  -ms-touch-action: none;
 }
 
-/* Global Styles */
-body {
-  background-color: #f2f2f2;
-  color: #333;
-  line-height: 1.6;
-  margin: 0;
-  padding: 20px;
+.test-element:nth-child(2) {
+  top: 150px;
+  left: 150px;
 }
 
-h1 {
-  font-size: 28px;
-  margin-bottom: 20px;
+.test-element:nth-child(3) {
+  top: 50px;
+  left: 100px;
 }
-
-main {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-nav {
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  margin-bottom: 8px;
-}
-
-input[type="text"],
-input[type="number"],
-input[type="date"],
-input[type="submit"] {
-  padding: 8px;
-  margin-bottom: 12px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-input[type="submit"] {
-  background-color: #db4938;
-  color: #fff;
-  cursor: pointer;
-}
-
-input[type="submit"]:hover {
-  background-color: #c23820;
-}
-
-table {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
-}
-
-thead {
-  background-color: #db4938;
-  color: #fff;
-}
-
-/* Füge diese Regel am Ende deines CSS-Codes hinzu */
-
-/* Spalte Balance */
-th:nth-child(5),
-td:nth-child(5) {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
-}
-
